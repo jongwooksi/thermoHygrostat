@@ -15,10 +15,12 @@ def end():
     
     
 def move(i):    
-    pt.pan(i)    
+    pt.pan(i)
+    time.sleep(0.02)
+    
 def updown_move(i):    
     pt.tilt(i)
-
+    time.sleep(0.02)
 
 
 

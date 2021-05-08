@@ -14,7 +14,7 @@ responseHeader = bytearray([0x5A, 0x05, 0x05, 0x06, 0x6A])
 DataHeader = bytearray([0x59, 0x59])
 requestLength = 100
 lidarBaudrate = 115200
-lidarPort = "/dev/ttyUSB1"
+lidarPort = "/dev/ttyUSB0"
 
 def modify_header(rx_data):
     loc_index = rx_data.find(responseHeader)
@@ -57,7 +57,7 @@ def lidarstart():
         
 
         for i in range(len(rx_data)):
-            print(hex(rx_data[i]), end=" ")
+            #print(hex(rx_data[i]), end=" ")
             if i == 4 :
                 print()
 
@@ -79,47 +79,18 @@ def lidarstart():
     ser.close()
     return distance
    
+
 def scan(deg):
     move(deg)
-    time.sleep(0.1)
     distance = lidarstart()
-    fix = 8
-    map_d = (distance**2 - fix**2)**0.5 +3
-    print("deg:{} {:.1f} cm".format(deg-10,map_d))
-    
-    return round(distance, 1)
-
-if __name__ == '__main__':
-    init()
-    
-    while True:
-        #init()
-        
-        scandata = []
-        
-        
-        for i in range(10-30,10+30+1,1):
-            scandata.append(scan(i))
-          
-        
-        
-        scandata2 = []
-        
-        for i in range(10+30,10-30-1,-1):
-            scandata2.append(scan(i))
-            
-        scandata2.reverse()
-        
-        
-        print(scandata)
-        print(scandata2)
-
-        
-        end()
-        
-        
-    
-           
+    #fix = 8
+    #map_d = (distance**2 - fix**2)**0.5 +3
+    #print("deg:{} {:.1f} cm".format(deg-10,map_d))
+    print("Distance {:.1f} cm".format(distance))
+    #f = open("distance.txt", 'w')
+    #f.write(str(distance))
+    #f.close()
+    return round(distance, 1)      
 
        
 
