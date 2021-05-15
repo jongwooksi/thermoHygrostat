@@ -2,14 +2,18 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
-tf.set_random_seed(7777)
+tf.reset_default_graph()
+tf.set_random_seed(777)
+np.random.seed(777)
 
 input_col_counter = 5 
 output_col_counter = 1 
  
-len_sequence = 5
-hidden_cell = 100  
+len_sequence = 1
+hidden_cell = 150  
 hidden_cell2 = 20
 forget_bias = 10 
 forget_bias2 = 10  
@@ -100,7 +104,9 @@ for epoch in range(epoch_num):
         test_error_save.append(test_error)
         
         print("epoch: {}, train_error(A): {:4f}, test_error(B): {:4f}".format(epoch+1, train_error, test_error))
-        
+
+saver = tf.train.Saver()
+saver.save(sess, "./Model/trainedModel" )
 
 countzero = 0
 countone= 0

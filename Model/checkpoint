@@ -1,0 +1,2 @@
+model_checkpoint_path: "trainedModel"
+all_model_checkpoint_paths: "trainedModel"
