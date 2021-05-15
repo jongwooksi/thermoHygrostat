@@ -3,7 +3,7 @@ import json
 import numpy as np
 import copy
 
-thresh = 35
+thresh = 27
 
 def showImage(mask, new_list):
 
@@ -27,8 +27,9 @@ def showImage(mask, new_list):
     
     contours, hierachy = cv2.findContours(dst, cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     
-    object_number = 1
-
+    object_number = 0
+    sum_temperature = 0
+    
     for cnt in contours:
         
         x, y, w, h = cv2.boundingRect(cnt)
@@ -53,10 +54,14 @@ def showImage(mask, new_list):
         cv2.drawContours(show_image, cnt, -1, (255,0,0), -1)
         cv2.putText(show_image, text, (10*center_x-20,10*center_y), cv2.FONT_HERSHEY_SIMPLEX, 0.2, (255,0,255), 1)
         object_number += 1
-
+        sum_temperature += contour_temperature
+        
         print(text)
         print(10*center_x, 10*center_y)
         
-    return show_image
+        
+    if object_number == 0:
+        return show_image, -1
+    else: return show_image, sum_temperature/object_number
 
     

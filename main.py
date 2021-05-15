@@ -10,7 +10,7 @@ from dtpa import *
 from tfminiplus import *
 from camera import *
 from pantilt import *
-
+from test import predict
 #import tty
 #import termios
 #import pyautogui
@@ -51,10 +51,11 @@ def dataScan(angletopan, angletotilt):
     print("current up-down(tilt) angle: ", moveverticle)
     return maxVal
                     
-                    
+            
 if __name__ == '__main__':
     #init() 
-
+    inputData = []
+    
     while cv2.waitKey(33) < 0:
         ret, frame = capture.read()
         
@@ -81,9 +82,22 @@ if __name__ == '__main__':
             
         print()
         print(showdata)
-        image = showImage(frame, showdata)
+        image, value = showImage(frame, showdata)
         
-        cv2.imshow("VideoFrame", image)
+        if value == -1:
+            print("normal environment")
+        else:
+            if len(inputData) == 5:            
+                del inputData[0]
+                inputData.append(value)
+                print("anomaly") if predict(inputData) else print("normal") 
+                
+            else:
+                inputData.append(value)
+            
+            print(inputData)
+            
+            cv2.imshow("VideoFrame", image)
         
        # with open('temperature.json', 'w') as file:
        #     json.dump(showdata, file)

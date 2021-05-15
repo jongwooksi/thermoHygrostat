@@ -14,7 +14,7 @@ responseHeader = bytearray([0x5A, 0x05, 0x05, 0x06, 0x6A])
 DataHeader = bytearray([0x59, 0x59])
 requestLength = 100
 lidarBaudrate = 115200
-lidarPort = "/dev/ttyUSB0"
+lidarPort = "/dev/ttyUSB1"
 
 def modify_header(rx_data):
     loc_index = rx_data.find(responseHeader)

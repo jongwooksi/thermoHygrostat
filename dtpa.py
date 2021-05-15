@@ -6,7 +6,7 @@ import time
 requestHeader = bytearray([0x11, 0x00, 0x00, 0x04, 0x01, 0x98])
 requestLength = 2054
 dtpaBaudrate = 115200
-dtpaPort = "/dev/ttyUSB1"
+dtpaPort = "/dev/ttyUSB0"
 minRange = -10
 maxRange = 200
 maxIndex = 1023

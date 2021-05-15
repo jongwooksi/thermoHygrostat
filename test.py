@@ -1,12 +1,12 @@
 import tensorflow as tf
-from sklearn import datasets
 import numpy as np
 import os
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 thresh = 0.6
 
 def predict(testX):
-
+    testX = [[testX]]
+    
     path = './Model/trainedModel.meta'
     saver = tf.train.import_meta_graph(path)
 
@@ -28,8 +28,9 @@ def predict(testX):
     if predictVal > thresh :return True 
     else: return False
         
-
+'''
 if __name__ == '__main__':
     testX = [[[70.5, 70.3, 71, 70.8,73.4]]]
 
-    print("anomaly") if predict(testX) else print("normal") 
+    print("anomaly") if predict(testX) else print("normal")
+'''
