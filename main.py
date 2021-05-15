@@ -11,10 +11,6 @@ from tfminiplus import *
 from camera import *
 from pantilt import *
 from test import predict
-#import tty
-#import termios
-#import pyautogui
-#import json
 
 capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
@@ -53,7 +49,8 @@ def dataScan(angletopan, angletotilt):
                     
             
 if __name__ == '__main__':
-    #init() 
+    #init()
+    f = open('collect.csv','a', newline='')
     inputData = []
     
     while cv2.waitKey(33) < 0:
@@ -90,7 +87,12 @@ if __name__ == '__main__':
             if len(inputData) == 5:            
                 del inputData[0]
                 inputData.append(value)
-                print("anomaly") if predict(inputData) else print("normal") 
+                print("anomaly") if predict(inputData) else print("normal")
+                
+                
+                wr = csv.writer(f)
+                wr.writerow(inputData)
+                f.close()
                 
             else:
                 inputData.append(value)
@@ -114,6 +116,7 @@ cv2.destroyAllWindows()
        
 
        
+
 
 
 
