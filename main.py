@@ -12,6 +12,9 @@ from camera import *
 from pantilt import *
 from test import predict
 
+init = [0.020, 0.040, 0.060, 0.140, 0.210, 0.238,0.286,0.334, 0.382, 0.430, 0.478, 0.526, 0.574, 0.622, 0.670, 0.718, 0.766, 0.814, 0.862, 0.910, 0.958, 1.006, 1.054, 1.102, 1.150, 1.198, 1.246, 1.294, 1.342, 1.390, 1.438, 1.486, 1.534, 1.582, 1.630, 1.678, 1.726, 1.774, 1.822, 1.870 ]
+step = [0.010, 0.047, 0.063 ,0.077, 0.093, 0.131,0.149,0.177, 0.204, 0.232, 0.260, 0.287, 0.315, 0.343, 0.370, 0.398, 0.426, 0.453, 0.481, 0.509, 0.533, 0.560, 0.587, 0.614, 0.642, 0.669, 0.696, 0.723, 0.750, 0.777, 0.805, 0.832, 0.859, 0.886, 0.913, 0.941, 0.968, 0.995, 1.022, 1.049 ]
+
 capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
@@ -28,19 +31,24 @@ def dataScan(angletopan, angletotilt):
     
     dtpavalue = dtpaStart()
     res = np.reshape(dtpavalue,(32,32))
-    last = res[14:19 , 14:19]
+    cropDtpa = res[14:19 , 14:19]
     
     
-    for m in range(5):
-        for n in range(5):
-            if(last[m][n] > 24):
-                for k in range(10):
-                    if(int(float(distance)) >= k*100 and int(float(distance)) < (k+1) * 100):
-                        last[m][n] += 1.6 * k # + 0.1 * k * k 
-           
+    for row in range(5):
+        for col in range(5):
+            condition = int((cropDtpa[row][col]+1)/5)
+            
+            if condition < 0:
+                continue
+            
+            else:
+                modifyVal = cropDtpa[row][col] + init[condition] + (int(float(distance)*0.1) - 1)*step[condition] 
+                cropDtpa[row][col] = modifyVal
+            
+   
     # modify temperature about distance
      
-    maxVal = round(last.max(),1)
+    maxVal = round(cropDtpa.max(),1)
     
     print(maxVal)
     print('pan', angletopan, 'tilt', angletotilt)

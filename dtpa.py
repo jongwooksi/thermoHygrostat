@@ -72,53 +72,5 @@ def dtpaStart():
 	ser.close()
 	return dtpavalue
 	
-import numpy as np
-
-if __name__ == "__main__":
-    while True:
-        dtpavalue = dtpaStart()
-        res = np.reshape(dtpavalue,(32,32))
-        #14 to 18
-  #      print(res[14:19, 14:19])
-        
-        last = res[14:19 , 14:19]
-   #     print('asd',last)
-        i = 0
-        j = 0
-        f = open("distance.txt", 'r')
-        distance = f.readline()
-        print('distance____',distance)
-        f.close()
-        while i < 5:
-            while j < 5:
-                if(last[i][j] > 24):
-                    '''
-                    if(int(float(distance)) < 100):
-                        last[i][j] += 5
-                    elif(int(float(distance)) >= 100 & int(float(distance)) < 200):
-                        last[i][j] += 7
-                    elif(int(float(distance)) >= 200 & int(float(distance)) < 300):
-                        last[i][j] += 9
-                    elif(int(float(distance)) >= 300 & int(float(distance)) < 400):
-                        last[i][j] += 7
-                    elif(int(float(distance)) >= 400 & int(float(distance)) < 500):
-                        last[i][j] += 35
-                    elif(int(float(distance)) >= 500 & int(float(distance)) < 600):
-                        last[i][j] += 14
-                        '''
-                    for k in range(10):
-                        if(int(float(distance)) >= k*100 and int(float(distance)) < (k+1) * 100):
-                            last[i][j] += 1.6 * k # + 0.1 * k * k 
-                j += 1
-            i += 1
-            j = 0
-                
-                
-        print('temperature',last.max())
-        f= open("temperature.txt","w")
-        f.write(str(float(last.max())))
-        f.close()
-        
-              
 
 

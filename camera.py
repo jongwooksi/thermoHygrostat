@@ -8,10 +8,6 @@ thresh = 27
 def showImage(mask, new_list):
 
     show_image = copy.deepcopy(mask)
- 
-    #with open("temperature.json") as file:
-    #    new_list = json.load(file)
-       
 
     for row in range(0,24):
         for col in range(0,32):
