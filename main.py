@@ -16,6 +16,7 @@ capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
+reverseFlag =False
 
 def dataScan(angletopan, angletotilt):
     movehorizon = (angletopan- 320)/10 - 5
@@ -64,19 +65,36 @@ if __name__ == '__main__':
         
         print('object POS- current :',angletopan, angletotilt)
         
-        
-        for angletotilt in range(0,480, 20):
-            if((angletotilt/20)%2 ==0):
-                for angletopan in range(0,640,20):
-                    maxVal = dataScan(angletopan, angletotilt)
-                    showdata[int(float(angletotilt)/20)][int(float(angletopan)/20)] = maxVal
- 
-            else:
-                for angletopan in reversed(range(0,640,20)):
-                    maxVal = dataScan(angletopan, angletotilt)                 
-                    showdata[int(float(angletotilt)/20)][int(float(angletopan)/20)] = maxVal
-       
+        if reverseFlag is False:
+            for angletotilt in range(0,480, 20):
+                if((angletotilt/20)%2 ==0):
+                    for angletopan in range(0,640,20):
+                        maxVal = dataScan(angletopan, angletotilt)
+                        showdata[int(float(angletotilt)/20)][int(float(angletopan)/20)] = maxVal
+     
+                else:
+                    for angletopan in reversed(range(0,640,20)):
+                        maxVal = dataScan(angletopan, angletotilt)                 
+                        showdata[int(float(angletotilt)/20)][int(float(angletopan)/20)] = maxVal
+           
+            reverseFlag = True
             
+        else:
+            for angletotilt in reversed(range(0,480, 20)):
+                if((angletotilt/20)%2 ==0):
+                    for angletopan in reversed(range(0,640,20)):
+                        maxVal = dataScan(angletopan, angletotilt)
+                        showdata[int(float(angletotilt)/20)][int(float(angletopan)/20)] = maxVal
+     
+                else:
+                    for angletopan in range(0,640,20):
+                        maxVal = dataScan(angletopan, angletotilt)                 
+                        showdata[int(float(angletotilt)/20)][int(float(angletopan)/20)] = maxVal
+           
+            reverseFlag = False
+        
+        
+        
         print()
         print(showdata)
         image, value = showImage(frame, showdata)
