@@ -13,15 +13,15 @@ input_col_counter = 5
 output_col_counter = 1 
  
 len_sequence = 1
-hidden_cell = 150  
+hidden_cell = 30  
 hidden_cell2 = 20
 forget_bias = 10 
 forget_bias2 = 10  
 keep_prob = 0.7
 keep_prob2 = 0.9
 
-epoch_num =3000        
-learning_rate = 0.00005
+epoch_num =20000        
+learning_rate = 0.0001
 
 
 def lstm_cell():
@@ -50,7 +50,8 @@ dataY = []
  
 for i in range(0, len(y) - len_sequence):
     _x = x[i : i+len_sequence]
-    _y = y[i + len_sequence] 
+    _y = y[i] 
+    print(_x, _y)
     dataX.append(_x) 
     dataY.append(_y)
  
@@ -112,8 +113,8 @@ countzero = 0
 countone= 0
 
 
-for i, j in zip(testY, test_predict):
-    print(i, j, end=" ")
+for i, j, x in zip(testY, test_predict,testX):
+    print(i, j, x, end=" ")
 
     if i == 0 and j < 0.5:
         print("success")
